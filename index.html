@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Tag&Tab is a keyword‑based membership‑inference attack that reliably detects whether text appeared in an LLM’s pre‑training corpus.">
+  <meta name="keywords" content="Tag&Tab, membership‑inference attack, pre‑training data detection, large language models, privacy">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tag&Tab — Pre‑training Data Detection in Large Language Models</title>
+
+  <!-- ⚠️ OPTIONAL: add your own Google‑Analytics tag or remove this block entirely. -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date());
+    gtag('config', 'UA-XXXXXXX-X');
+  </script>
+  -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- ░░░ Navbar ░░░ -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://sagivantebi.com">
+        <span class="icon"><i class="fas fa-home"></i></span>
+      </a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">More&nbsp;Research</a>
+        <div class="navbar-dropdown">
+          <!-- TODO: update with your other projects or remove -->
+          <a class="navbar-item" href="https://arxiv.org/abs/2401.09075">The Risk of Customized GPTs&nbsp;- 2024</a>
+          <a class="navbar-item" href="https://arxiv.org/abs/2506.14474">LexiMark&nbsp;- 2025</a>
+          <a class="navbar-item" href="#">TabMIA&nbsp;- 2025</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ░░░ Hero ░░░ -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Tag&Tab: Pre‑training Data Detection in Large Language Models Using Keyword‑Based Membership Inference Attack</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://scholar.google.com/citations?hl=iw&user=j_WBtHIAAAAJ">Sagiv Antebi</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?hl=iw&user=9zI29XgAAAAJ">Edan Habler</a><sup>1</sup></span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?hl=iw&user=k-J7GfgAAAAJ">Asaf Shabtai</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://scholar.google.com/citations?hl=iw&user=ruZDm9QAAAAJ">Yuval Elovici</a><sup>1</sup>,</span>
+
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Ben‑Gurion University of the Negev</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF link -->
+              <!-- <span class="link-block">
+                <a href="./static/pdfs/tag_tab_paper.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
+                </a>
+              </span> -->
+              <!-- arXiv -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2501.08454" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video link placeholder -->
+              <!-- <span class="link-block">
+                <a href="https://youtu.be/XXXXXXXXXXX" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-youtube"></i></span><span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code repo -->
+              <span class="link-block">
+                <a href="https://anonymous.4open.science/r/Tag-Tab-0E80/README.md" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
+                </a>
+              </span>
+              <!-- Dataset or supplementary -->
+              <!-- <span class="link-block">
+                <a href="https://huggingface.co/datasets/TagTab" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="far fa-images"></i></span><span>Data</span>
+                </a>
+              </span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ Teaser video ░░░ -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
+         TODO: Replace teaser.mp4 with your own demonstration clip -->
+        <!-- <source src="./static/videos/teaser.mp4" type="video/mp4">
+      </video> -->
+<!-- Remove “is-3by2” and let the image decide its own height -->
+<figure class="image">
+  <img src="./static/images/Tag%20Tab%20Diagram%20-%20Final_page-0001.jpg"
+       alt="Tag&Tab method diagram"
+       style="max-width:100%; height:auto;">   <!-- keep full width, natural height -->
+</figure>
+
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Tag&Tab</span> detects whether the given LLM was trained on specific documents, using selected high‑entropy keyword probabilities.      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ Results carousel ░░░ -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <!-- Placeholder video/image items -->
+        <div class="item">
+          <img src="./static/images/random_placeholder.jpg" alt="Example output" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░░ Abstract ░░░ -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>Large language models (LLMs) have become essential tools for digital task assistance. Their training relies heavily on vast collections of data that may include copyright‑protected or sensitive information. Existing membership‑inference attacks (MIAs) typically operate at the sentence or paragraph level by analysing token‑level probabilities, but they often miss the semantic importance of individual words and thus achieve limited accuracy.</p>
+          <p>We introduce <strong>Tag&Tab</strong>, a black‑box MIA that first <em>tags</em> high‑entropy keywords and named entities in the input and then <em>tabs</em>—i.e.&nbsp;queries the target LLM to obtain log‑likelihoods of those keywords. The average keyword likelihood acts as a robust membership score.</p>
+          <p>Across four benchmark datasets (BookMIA, MIMIR, PatentMIA, and The Pile) and ten open‑source LLMs, Tag&Tab boosts AUC by 5 – 18 % over the state of the art, while requiring no auxiliary models or reference training. Its strong, consistent performance underscores the pivotal role of informative words in detecting pre‑training leakage.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ░░░ Method ░░░ -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <p>The <strong>Tag&Tab</strong> pipeline is a two‑stage black‑box attack:</p>
+          <ul>
+            <li><strong>Tagging.</strong> A lightweight keyword‑extraction module marks informative tokens—high‑entropy words and named entities.</li>
+<li><strong>Tabbing.</strong> The attacker re-prompts the target LLM and logs the likelihoods of the tagged keywords only. Their average yields a membership score, which is compared against a predefined threshold to decide whether the passage belonged to the model’s pre-training data.</li>
+          </ul>
+          <p>This focus on semantically meaningful words drastically reduces noise from filler tokens and boosts detection accuracy, especially for long texts.</p>
+        </div>
+        <figure class="image is-3by2">
+          <img src="./static/images/selected_metrics_highlighted_Graph_bar_page-0001.jpg" alt="Method diagram placeholder" style="max-width:100%; height:auto;">
+        </figure>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">BookMIA Results</h2>
+    <div class="table-container">
+      <table class="table is-striped is-bordered is-fullwidth is-size-7">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th colspan="2">LLaMa-7b</th>
+            <th colspan="2">LLaMa-13b</th>
+            <th colspan="2">LLaMa-30b</th>
+            <th colspan="2">Pythia-6.9b</th>
+            <th colspan="2">Pythia-12b</th>
+            <th colspan="2">GPT-3.5</th>
+            <th colspan="2">Average</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>AUC</th><th>T@F5</th>
+            <th>AUC</th><th>T@F5</th>
+            <th>AUC</th><th>T@F5</th>
+            <th>AUC</th><th>T@F5</th>
+            <th>AUC</th><th>T@F5</th>
+            <th>AUC</th><th>T@F5</th>
+            <th>AUC</th><th>T@F5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Neighbor</td><td>0.65</td><td><u>0.27</u><td>0.71</td><td>0.38</td><td>0.90</td><td>0.73</td><td>0.65</td><td>0.26</td><td>0.71</td><td>0.36</td><td>0.96</td><td>0.88</td><td>0.76</td><td>0.48</td></tr>
+          <tr><td>Loss</td><td>0.59</td><td>0.25</td><td>0.70</td><td>0.43</td><td>0.89</td><td>0.74</td><td>0.62</td><td>0.24</td><td>0.69</td><td>0.32</td><td><b>0.97</b></td><td><u>0.90</u></td><td>0.74</td><td>0.48</td></tr>
+          <tr><td>Zlib</td><td>0.53</td><td>0.22</td><td>0.67</td><td>0.42</td><td>0.89</td><td>0.74</td><td>0.55</td><td>0.19</td><td>0.61</td><td>0.25</td><td>0.96</td><td>0.88</td><td>0.70</td><td>0.45</td></tr>
+          <tr><td>Min-20% Prob</td><td>0.61</td><td>0.24</td><td>0.70</td><td>0.42</td><td>0.87</td><td>0.70</td><td>0.65</td><td>0.25</td><td>0.70</td><td>0.34</td><td>0.95</td><td>0.86</td><td>0.75</td><td>0.47</td></tr>
+          <tr><td>MinK++-20% Prob</td><td>0.60</td><td>0.23</td><td>0.68</td><td>0.38</td><td>0.78</td><td>0.60</td><td>0.59</td><td>0.20</td><td>0.56</td><td>0.20</td><td>0.95</td><td>0.86</td><td>0.69</td><td>0.41</td></tr>
+          <tr><td>Max-20% Prob</td><td>0.51</td><td>0.15</td><td>0.66</td><td>0.34</td><td>0.87</td><td>0.69</td><td>0.51</td><td>0.13</td><td>0.59</td><td>0.20</td><td>0.96</td><td><b>0.91</b></td><td>0.68</td><td>0.40</td></tr>
+          <tr><td>ReCaLL</td><td>0.58</td><td>0.22</td><td>0.70</td><td>0.42</td><td>0.84</td><td>0.64</td><td>0.66</td><td>0.29</td><td>0.72</td><td><u>0.37</u></td><td>0.74</td><td>0.50</td><td>0.70</td><td>0.41</td></tr>
+          <tr><td>DC-PDD</td><td>0.61</td><td>0.27</td><td>0.71</td><td><u>0.47</u></td><td>0.88</td><td><b>0.77</b></td><td>0.68</td><td><b>0.34</b></td><td>0.74</td><td><b>0.44</b></td><td>0.95</td><td>0.89</td><td>0.76</td><td><b>0.53</b></td></tr>
+          <tr><td><b>Ours (Tag&Tab K=4)</b></td><td><b>0.69</b></td><td><b>0.28</b></td><td><b>0.78</b></td><td><b>0.48</b></td><td><b>0.91</b></td><td>0.76</td><td><b>0.72</b></td><td><u>0.30</u></td><td><u>0.75</u></td><td>0.36</td><td><b>0.97</b></td><td><u>0.90</u></td><td><b>0.80</b></td><td><u>0.51</u></td></tr>
+          <tr><td><b>Ours (Tag&Tab K=10)</b></td><td><u>0.67</u></td><td>0.26</td><td><u>0.77</u></td><td>0.46</td><td><b>0.91</b></td><td><b>0.77</b></td><td><b>0.72</b></td><td><u>0.30</u></td><td><b>0.76</b></td><td>0.36</td><td>0.96</td><td>0.87</td><td><b>0.80</b></td><td>0.50</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="has-text-centered is-size-7 mt-3">
+      AUC and T@F=5% scores for BookMIA membership inference. Best in <b>bold</b>, second-best <u>underlined</u>.
+    </p>
+  </div>
+</section>
+
+
+
+<!-- ░░░ MIMIR table ░░░ -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">The Pile & MIMIR Results</h2>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-size-7">
+        <thead>
+          <tr>
+            <th rowspan="2">Method</th>
+            <th colspan="5">DM Mathematics</th>
+            <th colspan="5">Github</th>
+            <th colspan="5">Pile CC</th>
+            <th colspan="5">C4</th>
+            <th colspan="5">Ubuntu IRC</th>
+            <th colspan="5">Gutenberg</th>
+            <th colspan="5">EuroParl</th>
+            <th colspan="5">Average</th>
+          </tr>
+          <tr>
+            <th>160M</th><th>1.4B</th><th>2.8B</th><th>6.9B</th><th>12B</th>
+            <th>160M</th><th>1.4B</th><th>2.8B</th><th>6.9B</th><th>12B</th>
+            <th>160M</th><th>1.4B</th><th>2.8B</th><th>6.9B</th><th>12B</th>
+            <th>160M</th><th>1.4B</th><th>2.8B</th><th>6.9B</th><th>12B</th>
+            <th>160M</th><th>1.4B</th><th>2.8B</th><th>6.9B</th><th>12B</th>
+            <th>160M</th><th>1.4B</th><th>2.8B</th><th>6.9B</th><th>12B</th>
+            <th>160M</th><th>1.4B</th><th>2.8B</th><th>6.9B</th><th>12B</th>
+            <th>160M</th><th>1.4B</th><th>2.8B</th><th>6.9B</th><th>12B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Loss</td><td>0.85</td><td>0.76</td><td>0.84</td><td>0.68</td><td>0.86</td><td>0.80</td><td>0.85</td><td>0.86</td><td>0.88</td><td>0.88</td><td>0.53</td><td>0.54</td><td>0.54</td><td>0.55</td><td>0.55</td><td>0.50</td><td>0.51</td><td>0.51</td><td>0.51</td><td><b>0.51</b></td><td>0.63</td><td>0.59</td><td>0.60</td><td>0.58</td><td>0.58</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.52</td><td>0.52</td><td>0.50</td><td>0.52</td><td>0.51</td><td>0.67</td><td>0.67</td><td>0.69</td><td>0.66</td><td>0.70</td></tr>
+          <tr><td>Zlib</td><td>0.68</td><td>0.59</td><td>0.66</td><td>0.55</td><td>0.69</td><td><u>0.84</u></td><td><u>0.88</u></td><td><u>0.89</u></td><td><u>0.90</u></td><td><u>0.90</u></td><td>0.51</td><td>0.53</td><td>0.53</td><td>0.54</td><td>0.54</td><td>0.51</td><td>0.51</td><td>0.51</td><td>0.51</td><td><b>0.51</b></td>    <td>0.52</td><td>0.52</td><td>0.53</td><td>0.54</td><td>0.54</td><td>0.53</td><td>0.60</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.51</td><td>0.51</td><td>0.50</td><td>0.51</td><td>0.51</td><td>0.63</td><td>0.63</td><td>0.65</td><td>0.62</td><td>0.66</td></tr>
+          <tr><td>Min-20% Prob</td><td>0.61</td><td>0.53</td><td>0.70</td><td>0.50</td><td>0.82</td><td>0.80</td><td>0.85</td><td>0.86</td><td>0.88</td><td>0.88</td><td>0.52</td><td>0.53</td><td>0.54</td><td>0.55</td><td>0.55</td><td>0.51</td><td>0.51</td><td>0.51</td><td>0.51</td><td>0.50</td>    <td>0.58</td><td>0.57</td><td>0.52</td><td>0.51</td><td>0.52</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.60</td><td>0.53</td><td><b>0.54</b></td><td>0.52</td><td>0.50</td><td>0.51</td><td>0.61</td><td>0.61</td><td>0.65</td><td>0.61</td><td>0.69</td></tr>
+          <tr><td>Max-20% Prob</td><td>0.63</td><td>0.67</td><td>0.61</td><td>0.58</td><td>0.51</td><td>0.78</td><td>0.85</td><td>0.85</td><td>0.87</td><td>0.86</td><td>0.52</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.54</td><td>0.51</td><td>0.50</td><td>0.50</td><td>0.50</td><td>0.50</td>     <td><u>0.69</u></td><td><b>0.69</b></td><td><b>0.71</b></td><td><b>0.68</b></td><td><b>0.67</b></td><td><b>0.67</b></td><td><u>0.73</u></td><td>0.60</td><td><u>0.67</u></td><td>0.67</td><td>0.53</td><td><b>0.54</b></td><td><b>0.55</b></td><td>0.53</td><td>0.55</td><td>0.61</td><td>0.64</td><td>0.62</td><td>0.62</td><td>0.60</td></tr>
+          <tr><td>MinK++-20% Prob</td><td>0.81</td><td>0.79</td><td>0.66</td><td>0.81</td><td>0.73</td><td>0.57</td><td>0.57</td><td>0.61</td><td>0.63</td><td>0.66</td><td>0.51</td><td>0.50</td><td>0.52</td><td>0.53</td><td>0.53</td><td>0.52</td><td>0.51</td><td>0.51</td><td>0.50</td><td>0.50</td>     <td>0.52</td><td>0.51</td><td>0.52</td><td>0.54</td><td>0.61</td><td><b>0.67</b></td><td>0.60</td><td>0.60</td><td>0.60</td><td>0.60</td><td>0.54</td><td>0.53</td><td>0.51</td><td>0.51</td><td>0.51</td><td>0.60</td><td>0.59</td><td>0.57</td><td>0.62</td><td>0.61</td></tr>
+          <tr><td>RECALL</td><td>0.80</td><td>0.73</td><td>0.78</td><td>0.64</td><td>0.86</td><td>0.79</td><td>0.76</td><td>0.74</td><td>0.71</td><td>0.72</td><td>0.53</td><td>0.54</td><td>0.54</td><td>0.55</td><td>0.55</td><td>0.51</td><td>0.51</td><td>0.51</td><td>0.51</td><td><b>0.51</b></td>    <td><b>0.72</b></td><td>0.64</td><td><u>0.69</u></td><td>0.64</td><td>0.60</td><td>0.53</td><td><b>0.80</b></td><td><b>0.67</b></td><td><b>0.73</b></td><td><b>0.80</b></td><td>0.51</td><td>0.51</td><td>0.51</td><td>0.55</td><td><b>0.57</b></td><td>0.67</td><td>0.64</td><td>0.65</td><td>0.62</td><td>0.68</td></tr>
+          <tr><td>DC-PDD</td><td>0.90</td><td>0.86</td><td>0.86</td><td>0.85</td><td>0.86</td><td><b>0.87</b></td><td><b>0.91</b></td><td><b>0.92</b></td><td><b>0.93</b></td><td><b>0.93</b></td><td><u>0.54</u></td><td>0.55</td><td><b>0.56</b></td><td><b>0.57</b></td><td><b>0.57</b></td><td>0.51</td><td>0.51</td><td>0.51</td><td>0.51</td><td><b>0.51</b></td>    <td>0.58</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.53</td><td>0.60</td><td>0.60</td><td>0.53</td><td>0.53</td><td>0.51</td><td>0.52</td><td>0.50</td><td>0.51</td><td>0.54</td><td><b>0.70</b></td><td>0.70</td><td>0.72</td><td>0.71</td><td>0.70</td></tr>
+          <tr><td><b>Ours (Tag&Tab K=4)</b></td><td><b>0.96</b></td><td><b>0.96</b></td><td><b>0.96</b></td><td><b>0.95</b></td><td><b>0.95</b></td><td>0.78</td><td>0.82</td><td>0.83</td><td>0.84</td><td>0.85</td><td><u>0.54</u></td><td><b>0.56</b></td><td><b>0.56</b></td><td><b>0.57</b></td><td><b>0.57</b></td><td><b>0.53</b></td><td><b>0.52</b></td><td><b>0.52</b></td><td><b>0.52</b></td><td><b>0.51</b></td> <td>0.64</td><td><u>0.65</u></td><td>0.64</td><td><u>0.66</u></td><td><u>0.64</u></td><td><b>0.67</b></td><td>0.67</td><td><b>0.67</b></td><td><u>0.67</u></td><td>0.67</td><td><u>0.55</u></td><td><b>0.54</b></td><td><b>0.55</b></td><td><b>0.54</b></td><td><u>0.56</u></td><td><b>0.70</b></td><td><b>0.72</b></td><td><b>0.73</b></td><td><b>0.72</b></td><td><b>0.73</b></td></tr>
+          <tr><td><b>Ours (Tag&Tab K=10)</b></td><td><u>0.92</u></td><td><u>0.92</u></td><td><u>0.93</u></td><td><u>0.92</u></td><td><b>0.95</b></td><td>0.79</td><td>0.83</td><td>0.84</td><td>0.85</td><td>0.86</td><td><b>0.55</b></td><td><b>0.56</b></td><td><b>0.56</b></td><td><b>0.57</b></td><td><u>0.56</u></td><td><b>0.53</b></td><td><b>0.52</b></td><td><b>0.52</b></td><td><b>0.52</b></td><td><b>0.51</b></td>    <td>0.61</td><td>0.63</td><td>0.62</td><td>0.61</td><td>0.62</td><td>0.60</td><td>0.67</td><td><b>0.67</b></td><td><u>0.67</u></td><td>0.67</td><td><b>0.56</b></td><td><b>0.54</b></td><td><b>0.55</b></td><td><b>0.54</b></td><td>0.55</td><td><b>0.70</b></td><td><u>0.71</u></td><td><b>0.73</b></td><td><b>0.72</b></td><td><u>0.72</u></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="has-text-centered is-size-7 mt-3">
+      Best AUCs <b>bolded</b>, second-best <u>underlined</u> across MIMIR (top 4 columns) and Pile (bottom 4).
+    </p>
+  </div>
+</section>
+
+
+<!-- ░░░ Video ░░░
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video Overview</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/XXXXXXXXXXX?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ░░░ BibTeX ░░░ -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+<pre><code>@article{antebi2025tag,
+  title={Tag\&Tab: Pretraining Data Detection in Large Language Models Using Keyword-Based Membership Inference Attack},
+  author={Antebi, Sagiv and Habler, Edan and Shabtai, Asaf and Elovici, Yuval},
+  journal={arXiv preprint arXiv:2501.08454},
+  year={2025}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <!-- <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div> -->
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
