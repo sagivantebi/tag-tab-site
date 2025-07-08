@@ -162,9 +162,10 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <p>Large language models (LLMs) have become essential tools for digital task assistance. Their training relies heavily on vast collections of data that may include copyright‑protected or sensitive information. Existing membership‑inference attacks (MIAs) typically operate at the sentence or paragraph level by analysing token‑level probabilities, but they often miss the semantic importance of individual words and thus achieve limited accuracy.</p>
-          <p>We introduce <strong>Tag&Tab</strong>, a black‑box MIA that first <em>tags</em> high‑entropy keywords and named entities in the input and then <em>tabs</em>—i.e.&nbsp;queries the target LLM to obtain log‑likelihoods of those keywords. The average keyword likelihood acts as a robust membership score.</p>
-          <p>Across four benchmark datasets (BookMIA, MIMIR, PatentMIA, and The Pile) and ten open‑source LLMs, Tag&Tab boosts AUC by 5 – 18 % over the state of the art, while requiring no auxiliary models or reference training. Its strong, consistent performance underscores the pivotal role of informative words in detecting pre‑training leakage.</p>
+          <p>Large language models (LLMs) have become essential tools for digital task assistance. Their training relies on collecting vast amounts of data, which may include copyright-protected or sensitive content.</p>
+          <p>Recent efforts to detect pretraining data in LLMs have focused on sentence- or paragraph-level membership inference attacks (MIAs), typically by analyzing token probabilities. However, these methods often fail to capture the semantic importance of individual words, leading to poor accuracy.</p>
+          <p>To overcome these limitations, we introduce <strong>Tag&Tab</strong>, a novel black-box MIA method for detecting pretraining data in LLMs. Our approach consists of two steps: <em>Tagging</em> keywords in the input using advanced NLP techniques, and <em>Tabbing</em>—querying the LLM to obtain and average the log-likelihoods of these keywords to compute a robust membership score.</p>
+          <p>Experiments on four benchmark datasets (BookMIA, MIMIR, PatentMIA, and The Pile) using several open-source LLMs of varying sizes show that Tag&Tab achieves an AUC improvement of 5.3–17.6% over previous state-of-the-art methods. These results highlight the critical role of word-level signals in identifying pretraining data leakage.</p>
         </div>
       </div>
     </div>
@@ -183,7 +184,7 @@
           <p>The <strong>Tag&Tab</strong> pipeline is a two‑stage black‑box attack:</p>
           <ul>
             <li><strong>Tagging.</strong> A lightweight keyword‑extraction module marks informative tokens—high‑entropy words and named entities.</li>
-<li><strong>Tabbing.</strong> The attacker re-prompts the target LLM and logs the likelihoods of the tagged keywords only. Their average yields a membership score, which is compared against a predefined threshold to decide whether the passage belonged to the model’s pre-training data.</li>
+<li><strong>Tabbing.</strong> The attacker prompts the target LLM and logs the likelihoods of the tagged keywords only. Their average yields a membership score, which is compared against a predefined threshold to decide whether the passage belonged to the model’s pre-training data.</li>
           </ul>
           <p>This focus on semantically meaningful words drastically reduces noise from filler tokens and boosts detection accuracy, especially for long texts.</p>
         </div>
