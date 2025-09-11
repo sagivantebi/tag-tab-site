@@ -150,13 +150,13 @@
       </video> -->
 <!-- Remove “is-3by2” and let the image decide its own height -->
 <figure class="image">
-  <img src="./static/images/Tag%20Tab%20Diagram%20-%20Final_page-0001.jpg"
+  <img src="./static/images/Tag&Tab Diagram - probs with map.jpg"
        alt="Tag&Tab method diagram"
        style="max-width:100%; height:auto;">   <!-- keep full width, natural height -->
 </figure>
 
       <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Tag&Tab</span> detects whether the given LLM was trained on specific documents, using selected high‑entropy keyword probabilities.      </h2>
+        <span class="dnerf">Tag&Tab</span> detects whether the given LLM was trained on specific documents, using selected NER spans with low‑entropy keyword probabilities.      </h2>
     </div>
   </div>
 </section>
@@ -203,7 +203,7 @@
         <div class="content has-text-justified">
           <p>The <strong>Tag&Tab</strong> pipeline is a two‑stage black‑box attack:</p>
           <ul>
-            <li><strong>Tagging.</strong> A lightweight keyword‑extraction module marks informative tokens—high‑entropy words and named entities.</li>
+            <li><strong>Tagging.</strong> A lightweight keyword‑extraction module marks informative tokens—low‑entropy words and named entities.</li>
 <li><strong>Tabbing.</strong> The attacker prompts the target LLM and logs the likelihoods of the tagged keywords only. Their average yields a membership score, which is compared against a predefined threshold to decide whether the passage belonged to the model’s pre-training data.</li>
           </ul>
           <p>This focus on semantically meaningful words drastically reduces noise from filler tokens and boosts detection accuracy, especially for long texts.</p>
